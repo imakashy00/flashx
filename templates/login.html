@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+</head>
+<body>
+<header class="pt-[5.5rem]">
+    <div class="min-w-96  flex justify-between items-center px-[200px] border-2 text-gray-800">
+        <span class="text-4xl"><a class="text-[#d97706] font-bold" href="/">flashX</a></span>
+        <nav id="nav">
+            <ul class="text-2xl flex space-x-8 justify-center  ">
+                <li><a class="hover:text-slate-400 pr-10 " href="/create">Create</a></li>
+                <li><a class="hover:text-slate-400 pr-10 " href="/about">About Us</a></li>
+                <li><a class="hover:text-slate-400 pr-10 " href="/login">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class=" mt-[5rem] flex items-center justify-center  ">
+    <form action="/login" class="border-2 rounded-3xl border-blue-950 w-[30rem] h-[30rem]"
+          enctype="multipart/form-data"
+          id="loginForm"
+          method="post">
+        <div class="flex justify-around">
+            <h2 class="text-3xl py-10">Login</h2>
+        </div>
+        {% if msg|length > 0 %}
+        <div id="test" class="flex text-red-500 font-bold rounded-3xl items-center justify-center">
+            {{msg}}
+        </div>
+        {%endif%}
+        <div class="flex justify-center mt-[2rem]" id="topic1">
+            <input class="border-2 pl-3  text-2xl border-blue-950 w-2/3 h-[50px] rounded-full"
+                   id="username" name="username"
+                   placeholder="username "
+                   required
+                   type="text">
+        </div>
+        <div class="relative flex justify-center mt-[3rem] text-2xl items-center">
+            <input class="px-3 py-2 rounded-full border-2 border-blue-950 h-[50px] flex justify-center  w-2/3"
+                   id="password" name="password"
+                   placeholder="password"
+                   required
+                   type="password">
+            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
+                <i class="fas fa-eye text-gray-400 hover:text-indigo-500 transition duration-200 ease-in-out"
+                   id="togglePassword"></i>
+            </div>
+        </div>
+
+        <div class="flex justify-around mt-[4rem] ">
+            <div class="flex w-2/3 justify-end items-center">
+                <button class=" text-2xl mx-5 text-white bg-blue-950 px-5 py-2 rounded-full"
+                        type="submit"
+                        >Login
+                </button>
+                <a class="text-2xl underline" href="/register">Register</a>
+            </div>
+        </div>
+    </form>
+</div>
+<footer>
+    <div class="footer bg-gray-900 text-white py-5 block absolute w-[100%] h-[100px] bottom-[-100px] left-0">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 flashX. All rights reserved.</p>
+            <p>Follow us on <a class="text-purple-500 hover:text-purple-300" href="#">github linkedIni X</a></p>
+        </div>
+    </div>
+</footer>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const formData={
+            username: username,
+            password:password
+        }
+        // Simulate API call to check username and password
+        fetch('/login',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Cookies are set by the server, no need to do anything
+                    window.location.href = '/create';
+                    console.log('Cookies set successfully');
+                } else {
+                    window.location.href = '/about';
+                    // console.error('Failed to set cookies');
+                }
+            })
+            .catch(error => {
+                window.location.href = '/';
+                console.error('Error while setting cookies:', error);
+            });
+
+    });
+
+</script>
+</body>
+</html>

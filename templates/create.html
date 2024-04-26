@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flashX</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+</head>
+<body>
+<header class="pt-[5.5rem]">
+    <div class="min-w-96 flex justify-between items-center px-[200px] border-2 text-gray-800">
+        <span class="text-4xl"><a class="text-[#d97706] font-bold" href="/">flashX</a></span>
+        <nav id="nav">
+            <ul class="text-2xl flex space-x-8 justify-center  ">
+                <li><a class="hover:text-slate-400 pr-10 " href="/">Home</a></li>
+                <li><a class="hover:text-slate-400 pr-10 " href="/about">About Us</a></li>
+<!--                <li><a class="hover:text-slate-400 pr-10 " href="/login">Login</a></li>-->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="w-[600px] mt-5 h-auto m-auto ">
+    <div class="w-[600px] mt-5 h-[100px] text-3xl font-semibold flex justify-center items-center">Create</div>
+    <form action="/submit-form" class="border-2 rounded-3xl border-blue-950 w-3/4 relative m-auto h-[30rem]"
+          enctype="multipart/form-data"
+          id="create_form"
+          method="post">
+        <div class="w-[90%] flex  mt-[5rem] justify-center relative m-auto   border-blue-950 border-2 rounded-full items-center">
+            <div id="headtopic" class=" w-1/2 h-[50px] bg-blue-950 text-white text-2xl flex justify-center items-center rounded-full">Topic</div>
+            <div id="headpdf" class=" w-1/2 h-[50px]  text-blue-950 text-2xl flex justify-center items-center rounded-full">Pdf</div>
+        </div>
+        <div class="flex justify-center mt-[3rem]" id="topic1">
+            <input class="border-2 pl-3  text-2xl border-blue-950 w-[90%] h-[50px] rounded-full"
+                   id="topic" name="topic"
+                   placeholder="topic"
+                   required
+                   type="text">
+            <input id="pdf" required class="px-3 py-2 rounded-full border-2 text-2xl border-blue-950 h-[50px] flex justify-center  w-[90%]" type="file" accept=".pdf" style="display: none">
+        </div>
+        <div class="flex justify-center mt-[2rem]" id="quantity1">
+            <input class="border-2 pl-3  text-2xl border-blue-950 w-[90%] h-[50px] rounded-full"
+                   id="quantity" name="quantity"
+                   placeholder="quantity"
+                   required
+                   type="number">
+        </div>
+        <div class="flex justify-around mt-[4rem]  ">
+            <button id="quiz" class="bg-blue-950 text-white text-2xl rounded-full px-5 py-1"  type="button">Quizz</button>
+            <button id="flash" class="bg-blue-950 text-white text-2xl rounded-full px-5 py-1" type="button">Flash</button>
+            <button id="summary" class="bg-blue-950 text-white text-2xl rounded-full px-5 py-1" type="button">Summary</button>
+        </div>
+
+    </form>
+    <button id="load" type="button" class="mt-[3rem] ml-[225px] flex items-center px-4 py-2 font-semibold leading-6 hidden text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Generating...
+    </button>
+
+</div>
+<footer>
+    <div class="footer bg-gray-900 text-white py-5 block absolute w-[100%] h-[100px] bottom-[-100px] left-0">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 flashX. All rights reserved.</p>
+            <p>Follow us on <a class="text-purple-500 hover:text-purple-300" href="#">github linkedIni X</a></p>
+        </div>
+    </div>
+</footer>
+<script>
+    document.getElementById('headpdf').addEventListener("click", askPdf)
+    document.getElementById('headtopic').addEventListener("click", askTopic)
+
+    function askPdf(){
+        document.getElementById("topic").style.display="none"
+        document.getElementById("pdf").style.display=""
+        document.getElementById("headpdf").style.backgroundColor="#17275c"
+        document.getElementById("headpdf").style.color="white"
+        document.getElementById("headtopic").style.backgroundColor="white"
+        document.getElementById("headtopic").style.color="#17275c"
+
+    }
+    function askTopic(){
+        document.getElementById("topic").style.display=""
+        document.getElementById("pdf").style.display="none"
+        document.getElementById("headpdf").style.backgroundColor="white"
+        document.getElementById("headpdf").style.color="#17275c"
+        document.getElementById("headtopic").style.backgroundColor="#17275c"
+        document.getElementById("headtopic").style.color="white"
+    }
+    document.getElementById('quiz').addEventListener('click', function() {
+        submitForm('quizzes');
+        document.getElementById('load').classList.remove('hidden')
+    });
+
+    document.getElementById('flash').addEventListener('click', function() {
+        submitForm('flashes');
+        document.getElementById('load').classList.remove('hidden')
+    });
+
+    document.getElementById('summary').addEventListener('click', function() {
+        submitForm('summary');
+        document.getElementById('load').classList.remove('hidden')
+    });
+
+    async function submitForm(action) {
+        const formData = new FormData();
+        formData.append('action', action);
+        formData.append('topic', document.getElementById('topic').value);
+        formData.append('quantity', document.getElementById('quantity').value);
+        if (document.getElementById('pdf').files.length > 0) {
+            formData.append('file', document.getElementById('pdf').files[0]);
+        }
+
+
+        try {
+
+            const response = await fetch('/submit-form', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+                // Redirect to the appropriate page based on the action
+                switch (action) {
+                    case 'quizzes':
+                        window.location.href = '/quizz';
+                        break;
+                    case 'flashes':
+                        window.location.href = '/flash';
+                        break;
+                    case 'summary':
+                        window.location.href = '/summary';
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                document.getElementById('load').classList.add('hidden')
+                alert("Something went wrong. Please try again!")
+            }
+        } catch (error) {
+            document.getElementById('load').classList.add('hidden')
+            alert("Something went wrong. Please try again!")
+        }
+    }
+
+</script>
+</body>
+</html>

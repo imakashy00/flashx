@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+</head>
+<body>
+<header class="pt-[5.5rem]">
+    <div class="min-w-96 flex justify-between items-center px-[200px] border-2 text-gray-800">
+        <span class="text-4xl"><a class="text-[#d97706] font-bold" href="/">flashX</a></span>
+        <nav id="nav">
+            <ul class="text-2xl flex space-x-8 justify-center  ">
+                <li><a class="hover:text-slate-400 pr-10 " href="/create">Create</a></li>
+                <li><a class="hover:text-slate-400 pr-10 " href="/about">About Us</a></li>
+<!--                <li><a class="hover:text-slate-400 pr-10 " href="/login">Login</a></li>-->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class=" mt-[5rem] flex items-center justify-center  ">
+    <form action="/register" class="border-2 rounded-3xl border-blue-950 w-[30rem] h-[40rem]"
+          enctype="multipart/form-data"
+          id="create_form"
+          method="post">
+        <div class="flex justify-around">
+            <h2 class="text-3xl py-10">Register</h2>
+        </div>
+        {% if msg|length > 0 %}
+            <div class="flex text-blue-500 font-bold rounded-3xl items-center justify-center">
+                {{msg}}
+            </div>
+        {%endif%}
+        <div class="flex justify-center mt-[2rem]" >
+            <input class="border-2 text-center text-2xl border-blue-950 w-2/3 h-[50px] rounded-full"
+                   id="register" name="username"
+                   placeholder="username "
+                   required
+                   type="text">
+        </div>
+        <div class="flex justify-center mt-[2rem]" >
+            <input class="border-2 text-center text-2xl border-blue-950 w-2/3 h-[50px] rounded-full"
+                   id="topic" name="email"
+                   placeholder="email "
+                   required
+                   type="email">
+        </div>
+        <div class="flex justify-center mt-[3rem] text-2xl ">
+            <input class="border-2 rounded-full w-2/3  text-center border-blue-950 h-[50px] flex justify-center"
+                   id="quantity"
+                   name="password"
+                   placeholder="password"
+                   required
+                   type="text">
+        </div>
+        <div class="flex justify-around mt-[4rem] ">
+            <div class="flex w-2/3 justify-end items-center">
+                <button class=" text-2xl mx-5 text-white bg-blue-950 px-5 py-2 rounded-full" name="action"
+                        type="submit"
+                        value="quizzes">Register
+                </button>
+                <a class="text-2xl underline" href="/login">Login</a>
+            </div>
+        </div>
+        <div class="flex justify-center items-center">
+            <div class="flex justify-center mt-[4rem] text-2xl border-2 border-blue-950 rounded-full w-2/3">
+                <a class="" href="#">SignUp with GOOGLE</a>
+            </div>
+        </div>
+    </form>
+</div>
+<footer>
+    <div class="footer bg-gray-900 text-white py-5 block absolute w-[100%] h-[100px] bottom-[-100px] left-0">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 flashX. All rights reserved.</p>
+            <p>Follow us on <a class="text-purple-500 hover:text-purple-300" href="#">github linkedIni X</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

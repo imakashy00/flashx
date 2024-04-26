@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+</head>
+<body>
+<header class="pt-[5.5rem]">
+    <div class="min-w-96 flex justify-between items-center px-[200px] border-2 text-gray-800">
+        <span class="text-4xl"><a class="text-[#d97706] font-bold" href="/">flashX</a></span>
+        <nav id="nav">
+            <ul class="text-2xl flex space-x-8 justify-center  ">
+                <li><a class="hover:text-slate-400 pr-10 " href="/create">Create</a></li>
+                <li><a class="hover:text-slate-400 pr-10 " href="/about">About Us</a></li>
+<!--                <li><a class="hover:text-slate-400 pr-10 " href="/login">Login</a></li>-->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div id="flashcards-container" class="flex mt-5 text-2xl flex-wrap justify-center"></div>
+<footer>
+    <div class="footer bg-gray-900 text-white py-5 block relative w-[100%] h-[100px] bottom-[-300px] left-0">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 flashX. All rights reserved.</p>
+            <p>Follow us on <a class="text-purple-500 hover:text-purple-300" href="#">github linkedIni X</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+<!--bottom-[-100px]-->
+<script>
+    function fetchAndRenderFlashcards() {
+        // document.getElementById('flash').style.background="#424242"
+        const flashcardsContainer = document.getElementById('flashcards-container');
+
+        fetch('http://localhost:8000/flashlist')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch flashcards');
+                }
+                console.log(response);
+                return response.json();
+
+            }) // Parse response as JSON
+            .then(flashcards => {
+                console.log(flashcards);
+                flashcards.forEach(flashcard => {
+                    const card = document.createElement('div');
+                    card.classList.add('flashcard', 'm-2', 'p-4', 'bg-gray-100', 'w-[400px]', 'h-auto');
+                    card.innerHTML = `
+                <h2 class="text-lg font-semibold mb-2">${flashcard.term}</h2>
+                <p>${flashcard.answer}</p>
+            `;
+                    flashcardsContainer.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching flashcards:', error);
+            });
+    }
+
+    // Call the function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchAndRenderFlashcards);
+
+</script>
+</html>

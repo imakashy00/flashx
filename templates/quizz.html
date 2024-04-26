@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flashX</title>
+    <link href="../static/css/output.css" rel="stylesheet">
+</head>
+<body>
+<header class="pt-[5.5rem]">
+    <div class="min-w-96  flex border-2 justify-between items-center px-[200px]  text-gray-800">
+        <span class="text-4xl"><a class="text-[#d97706] font-bold" href="/">flashX</a></span>
+        <nav id="nav">
+            <ul class="text-2xl flex space-x-8 justify-center  ">
+                <li><a class="hover:text-slate-400 pr-10 " href="/create">Create</a></li>
+                <li><a class="hover:text-slate-400 pr-10 " href="/about">About Us</a></li>
+<!--                <li><a class="hover:text-slate-400 pr-10 " href="/login">Login</a></li>-->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div  id="" class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Quiz!</h1>
+    <div id="quiz-container"></div>
+    <div class="mt-5 mx-[600px] flex">
+        <button class="pre-question-btn py-2 px-3 bg-blue-200 rounded-md hover:bg-gray-300 mr-5 focus:outline-none" >Previous</button>
+        <button class=" submit-answer-btn py-2 px-5 bg-amber-600 text-white rounded-md mr-5 hover:bg-blue-600 focus:outline-none" >Submit</button>
+        <button class="next-question-btn py-2 px-3 bg-blue-200 rounded-md hover:bg-gray-300 mr-5 focus:outline-none">Next</button>
+    </div>
+    <button class=" show-result-btn py-2 px-5 bg-amber-600 text-white font-bold rounded-md mr-5 hover:bg-blue-600 focus:outline-none" >Final Submit</button>
+
+</div>
+<footer>
+    <div class="footer bg-gray-900 text-white py-5 block absolute w-[100%] h-[100px] bottom-[-100px] left-0">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 flashX. All rights reserved.</p>
+            <p>Follow us on <a class="text-purple-500 hover:text-purple-300" href="#">github linkedIni X</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+<script>
+    function fetchAndRenderQuiz() {
+        const quizContainer = document.getElementById('quiz-container');
+        let currentQuizIndex = 0;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+        let quizzes;
+
+        function renderQuiz(quiz) {
+
+            quizContainer.innerHTML = `
+        <h2 class="text-2xl  mb-4">${currentQuizIndex+1}. ${quiz.question}</h2>
+        <div class="grid grid-cols-2 gap-4">
+            ${quiz.options.map(option => `
+                <label class="inline-flex items-center">
+        <input type="radio" name="quizOption" class="form-radio text-blue-600" value="${option}">
+        <span style="border: 1px solid gray; padding: 0.5rem; border-radius: 0.5rem;" class="ml-2">${option}</span>
+    </label>
+            `).join('')}
+        </div>
+
+    `;
+        }
+
+        function preQuestion() {
+            currentQuizIndex--;
+            if (currentQuizIndex < 0) {
+                currentQuizIndex = 0;
+            }
+            renderQuiz(quizzes[currentQuizIndex]);
+        }
+        function nextQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex >= quizzes.length) {
+                currentQuizIndex = quizzes.length - 1;
+            }
+            renderQuiz(quizzes[currentQuizIndex]);
+        }
+
+        function submitAnswer(){
+            const selectedOption = document.querySelector('input[type=radio]:checked');
+            const answer = selectedOption.value;
+            if (answer === quizzes[currentQuizIndex]['answer']) {
+                correctAnswers++;
+            } else {
+                incorrectAnswers++;
+            }
+            selectedOption.checked = true;
+            nextQuestion();
+        }
+
+
+        function showResult() {
+            const totalQuestions = quizzes.length;
+            const percentageCorrect = (correctAnswers / totalQuestions) * 100;
+            quizContainer.innerHTML = `
+        <h2 class="text-xl font-semibold mb-4">Quiz Completed!</h2>
+        <p class="text-2xl">Total Correct Answers: ${correctAnswers}</p>
+        <p class="text-2xl">Total Incorrect Answers: ${incorrectAnswers}</p>
+        <p class="text-2xl">Total Questions: ${totalQuestions}</p>
+        <p class="text-2xl">Percentage of Correct Answers: ${percentageCorrect.toFixed(2)}%</p>
+    `;
+        }
+
+
+        fetch('http://localhost:8000/quizlist')
+            .then(response => response.json())
+            .then(quiz => {
+                quizzes = quiz;
+                renderQuiz(quizzes[0]);
+            })
+            .catch(error => {
+                console.error('Error fetching quizzes:', error);
+            });
+        document.querySelector('.pre-question-btn').addEventListener('click', preQuestion);
+        document.querySelector('.submit-answer-btn').addEventListener('click', submitAnswer);
+        document.querySelector('.show-result-btn').addEventListener('click', showResult);
+        document.querySelector('.next-question-btn').addEventListener('click', nextQuestion);
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchAndRenderQuiz);
+</script>
+</html>

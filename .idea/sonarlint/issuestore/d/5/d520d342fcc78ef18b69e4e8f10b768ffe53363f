@@ -1,0 +1,19 @@
+
+kpython:S1192Ü"MDefine a constant instead of duplicating this literal "reading from" 5 times.(†‰ğàúÿÿÿÿ
+dpython:S1192İ"KDefine a constant instead of duplicating this literal "writing to" 5 times.(¨Êûº
+mpython:S3776Ÿ"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(‹ÜŞ¼
+rpython:S3776Ÿ"TRefactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.(÷í™Ìúÿÿÿÿ
+[python:S112Ñ">Replace this generic exception class with a more specific one.(š“æÿÿÿÿÿ
+rpython:S3776"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(««àúÿÿÿÿ
+mpython:S3776Õ"TRefactor this function to reduce its Cognitive Complexity from 25 to the 15 allowed.(Éˆå®
+mpython:S3776´"TRefactor this function to reduce its Cognitive Complexity from 29 to the 15 allowed.(îŞ–›
+Vpython:S5754Ô"8Catch a more specific exception or reraise the exception(ÛşƒÙşÿÿÿÿ
+Gpython:S1172à")Remove the unused function parameter "f".(œÊ§øÿÿÿÿ
+Ppython:S1481‘
+"2Replace the unused local variable "addr" with "_".(—â‡ßÿÿÿÿÿ
+Qpython:S1481‘
+"3Replace the unused local variable "flags" with "_".(—â‡ßÿÿÿÿÿ
+rpython:S3776…
+"TRefactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.(Êˆı€ùÿÿÿÿ
+_python:S5799Ú"GMerge these implicitly concatenated strings; or did you forget a comma?(å‘#
+Vpython:S5754ì"8Catch a more specific exception or reraise the exception(ÛşƒÙşÿÿÿÿ
