@@ -55,3 +55,6 @@ F
 templates/summary.html,6/8/6892117659efd43f18b4da8175b21d6a44c2d221
 D
 templates/index.html,f/6/f69b8ce2e31684ae06f1b3e84821e07e3dfddb2f
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
